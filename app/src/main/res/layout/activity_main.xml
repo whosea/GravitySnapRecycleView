@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dip"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:text="靠左滑动"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvLeft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dip"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:text="靠右滑动"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvRight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dip"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:text="居中翻页"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvCenter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.nc.snaprecyclerview.view.indicator.CircleRecyclerPageIndicator
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/crpiCenter"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingStart="5dip"
+            android:paddingEnd="5dip"
+            app:strokeWidth="0dip"
+            app:radius="5dip"
+            app:pageColor="#8A9BA9"
+            app:fillColor="@android:color/holo_red_light" />
+
+    </LinearLayout>
+
+</ScrollView>
