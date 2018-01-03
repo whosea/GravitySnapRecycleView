@@ -1,6 +1,8 @@
 #GravitySnapRecycleView
 Android Recycleview 翻页效果（类似ViewPager）
 
+原文链接：https://www.zybuluo.com/whosea/note/1006457
+
 #效果
 项目应用效果：
 
