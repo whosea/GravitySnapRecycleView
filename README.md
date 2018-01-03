@@ -1,7 +1,10 @@
 ###GravitySnapRecycleView
+
 ---
+
 ###效果
 项目应用效果：
+
 ![](https://raw.githubusercontent.com/whosea/GravitySnapRecycleView/master/doc/freegift.gif)
 
 ![](https://raw.githubusercontent.com/whosea/GravitySnapRecycleView/master/doc/product.gif)
