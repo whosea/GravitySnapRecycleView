@@ -1,8 +1,7 @@
-###GravitySnapRecycleView
+#GravitySnapRecycleView
+Android Recycleview 翻页效果（类似ViewPager）
 
----
-
-###效果
+#效果
 项目应用效果：
 
 ![](https://raw.githubusercontent.com/whosea/GravitySnapRecycleView/master/doc/freegift.gif)
@@ -17,7 +16,7 @@ demo效果：
 
 ![](https://raw.githubusercontent.com/whosea/GravitySnapRecycleView/master/doc/snap3.gif)
 
-###用法
+#用法
 创建处理翻页效果类（另外总共支持start end top bottom 和 center 五种行为）：
 ```
 GravitySnapHelper snapHelper = new GravitySnapHelper(Gravity.CENTER);
