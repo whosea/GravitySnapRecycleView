@@ -1,6 +1,5 @@
 package com.nc.snaprecycleview;
 
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,14 +15,14 @@ import java.util.Locale;
 /**
  * @author ht
  * @date Created on 2017/10/12
- * @description
- * 注意只处理linear和grid布局，实现左右滑动
+ * @description 注意只处理linear和grid布局，实现左右滑动
  * 支持start end top bottom 和 center 五种行为
  * start和end是靠左和靠右滑动，同理top和bottom是靠上和靠下上下滑动
  * center 目前只支持水平翻页滑动<br/>
  * 用法：<br/>
  * GravitySnapHelper snapHelper = new GravitySnapHelper(Gravity.CENTER); <br/>
  * snapHelper.setColumn(3);//如果一页里面有超过1列的都需要设置<br/>
+ * snapHelper.setCanPageScroll(true);//是否启用一页一页的滚动，默认不启用
  * snapHelper.attachToRecyclerView(recyclerview);<br/>
  */
 
@@ -36,7 +35,9 @@ public class GravityDelegate {
 	private GravitySnapHelper.SnapListener listener;
 	private boolean snapping;
 
-	//列数
+	/**
+	 * 列数
+	 */
 	private int column = 1;
 
 	private RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
@@ -87,11 +88,7 @@ public class GravityDelegate {
 	}
 
 	private boolean isRtl() {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			return false;
-		}
-		return TextUtils.getLayoutDirectionFromLocale(Locale.getDefault())
-				== View.LAYOUT_DIRECTION_RTL;
+		return TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL;
 	}
 
 
@@ -103,8 +100,8 @@ public class GravityDelegate {
 			if (gravity == Gravity.START) {
 				out[0] = distanceToStart(targetView, getHorizontalHelper(layoutManager), false);
 			} else if (gravity == Gravity.CENTER) {
-				out[0] = distanceToCenter(layoutManager,targetView, getHorizontalHelper(layoutManager));
-			}  else { // END
+				out[0] = distanceToCenter(layoutManager, targetView, getHorizontalHelper(layoutManager));
+			} else { // END
 				out[0] = distanceToEnd(targetView, getHorizontalHelper(layoutManager), false);
 			}
 		} else {
@@ -114,9 +111,9 @@ public class GravityDelegate {
 		if (layoutManager.canScrollVertically()) {
 			if (gravity == Gravity.TOP) {
 				out[1] = distanceToStart(targetView, getVerticalHelper(layoutManager), false);
-			}else if (gravity == Gravity.CENTER) {
-				out[1] = distanceToCenter(layoutManager,targetView, getVerticalHelper(layoutManager));
-			}  else { // BOTTOM
+			} else if (gravity == Gravity.CENTER) {
+				out[1] = distanceToCenter(layoutManager, targetView, getVerticalHelper(layoutManager));
+			} else { // BOTTOM
 				out[1] = distanceToEnd(targetView, getVerticalHelper(layoutManager), false);
 			}
 		} else {
@@ -143,11 +140,13 @@ public class GravityDelegate {
 					snapView = findEndView(layoutManager, getVerticalHelper(layoutManager));
 					break;
 				case Gravity.CENTER:
-					if (layoutManager.canScrollVertically()){
+					if (layoutManager.canScrollVertically()) {
 						snapView = findCenterView(layoutManager, getVerticalHelper(layoutManager));
-					}else{
+					} else {
 						snapView = findCenterView(layoutManager, getHorizontalHelper(layoutManager));
 					}
+					break;
+				default:
 					break;
 			}
 		}
@@ -159,7 +158,7 @@ public class GravityDelegate {
 		snapLastItem = snap;
 	}
 
-	private int distanceToCenter(RecyclerView.LayoutManager layoutManager,View targetView, OrientationHelper helper) {
+	private int distanceToCenter(RecyclerView.LayoutManager layoutManager, View targetView, OrientationHelper helper) {
 
 		int columnWidth = helper.getTotalSpace() / column;
 		int position = layoutManager.getPosition(targetView);
@@ -173,19 +172,19 @@ public class GravityDelegate {
 			row = ((GridLayoutManager) layoutManager).getSpanCount();
 		}
 		//该位置在哪一页
-		pageIndex = pageIndex(position,row);
+		pageIndex = pageIndex(position, row);
 		//当前页开始的位置
 		currentPagePosition = pageIndex * countOfPage(row);
 
-		//算出当前位置距离当前页开始位置有多远
+		//算出当前位置距离开始位置有多远
 		int distance = ((position - currentPagePosition) / row) * columnWidth;
 
 		int distanceToCenter = 0;
 		int childStart = 0;
-		if(isRtlHorizontal){
+		if (isRtlHorizontal) {
 			childStart = helper.getDecoratedEnd(targetView);
 			distanceToCenter = childStart - (helper.getTotalSpace() - distance);
-		}else{
+		} else {
 			childStart = helper.getDecoratedStart(targetView);
 			distanceToCenter = childStart - distance;
 		}
@@ -211,22 +210,21 @@ public class GravityDelegate {
 
 	/**
 	 * 返回距离Recycleview中间位置最近的view
+	 *
 	 * @param layoutManager
 	 * @return
 	 */
 	private View findCenterView(RecyclerView.LayoutManager layoutManager, OrientationHelper helper) {
-
 		int childCount = layoutManager.getChildCount();
 		if (childCount == 0) {
 			return null;
 		}
-
 		View closestChild = null;
 		final int center;
 		if (layoutManager.getClipToPadding()) {
-			if(isRtlHorizontal){
-				center = (helper.getTotalSpace()-helper.getEndAfterPadding()) + helper.getTotalSpace() / 2;
-			}else{
+			if (isRtlHorizontal) {
+				center = (helper.getTotalSpace() - helper.getEndAfterPadding()) + helper.getTotalSpace() / 2;
+			} else {
 				center = helper.getStartAfterPadding() + helper.getTotalSpace() / 2;
 			}
 		} else {
@@ -234,27 +232,22 @@ public class GravityDelegate {
 		}
 
 		int absClosest = Integer.MAX_VALUE;
-
 		for (int i = 0; i < childCount; i++) {
 			View child = layoutManager.getChildAt(i);
-
 			int childCenter = 0;
-			if(isRtlHorizontal){
-				childCenter =  (helper.getTotalSpace() - helper.getDecoratedEnd(child))
+			if (isRtlHorizontal) {
+				childCenter = (helper.getTotalSpace() - helper.getDecoratedEnd(child))
 						+ (helper.getDecoratedMeasurement(child) / 2);
-			}else{
+			} else {
 				childCenter = helper.getDecoratedStart(child)
 						+ (helper.getDecoratedMeasurement(child) / 2);
 			}
-
 			int absDistance = Math.abs(childCenter - center);
-
-			/** if child center is closer than previous closest, set it as closest  **/
+			/** 找出离中心最近的view  **/
 			if (absDistance < absClosest) {
 				absClosest = absDistance;
 				closestChild = child;
 			}
-
 		}
 		return closestChild;
 	}
@@ -390,6 +383,7 @@ public class GravityDelegate {
 
 	/**
 	 * 返回当前滑动哪个位置
+	 *
 	 * @param recyclerView
 	 * @return
 	 */
@@ -399,12 +393,98 @@ public class GravityDelegate {
 		if (layoutManager instanceof LinearLayoutManager) {
 			if (gravity == Gravity.START || gravity == Gravity.TOP || (gravity == Gravity.CENTER && !isRtlHorizontal)) {
 				return ((LinearLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition();
-			} else if (gravity == Gravity.END || gravity == Gravity.BOTTOM ) {
+			} else if (gravity == Gravity.END || gravity == Gravity.BOTTOM) {
 				return ((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition();
 			}
 		}
 
 		return RecyclerView.NO_POSITION;
+	}
+
+	/*
+	* 最终返回是某个位置(不是页数)
+	 */
+	public int findTargetSnapPositionByPage(RecyclerView.LayoutManager layoutManager, int velocityX,
+									  int velocityY) {
+
+		final int itemCount = layoutManager.getItemCount();
+		if (itemCount == 0) {
+			return RecyclerView.NO_POSITION;
+		}
+		//最靠近目标gravity的view，如果是start就找最左，如果是center就找居中
+		View mNearestMostChildView = null;
+		if (layoutManager.canScrollVertically()) {
+			if (gravity == Gravity.CENTER && !isRtlHorizontal) {
+				mNearestMostChildView = findCenterView(layoutManager, getVerticalHelper(layoutManager));
+			} else {
+				mNearestMostChildView = findStartView(layoutManager, getVerticalHelper(layoutManager));
+			}
+		} else if (layoutManager.canScrollHorizontally()) {
+			if (gravity == Gravity.CENTER && !isRtlHorizontal) {
+				mNearestMostChildView = findCenterView(layoutManager, getHorizontalHelper(layoutManager));
+			} else {
+				mNearestMostChildView = findStartView(layoutManager, getHorizontalHelper(layoutManager));
+			}
+		}
+
+		if (mNearestMostChildView == null) {
+			return RecyclerView.NO_POSITION;
+		}
+		int centerPosition = layoutManager.getPosition(mNearestMostChildView);
+		if (centerPosition == RecyclerView.NO_POSITION) {
+			return RecyclerView.NO_POSITION;
+		}
+
+		//当前页
+		int currentPage = 0;
+		//目标页
+		int targetPage = 0;
+
+		int row = 1;
+		if (layoutManager instanceof GridLayoutManager) {
+			row = ((GridLayoutManager) layoutManager).getSpanCount();
+		}
+		//当前位置在哪一页
+		currentPage = pageIndex(centerPosition, row);
+
+		int differNum = 0;
+		if (layoutManager.canScrollHorizontally()) {
+			if (velocityX > 0) {
+				differNum = 1;
+				if (isRtlHorizontal) {
+					differNum = -1;
+				}
+			} else {
+				differNum = -1;
+				if (isRtlHorizontal) {
+					differNum = 1;
+				}
+			}
+			targetPage = currentPage + differNum;
+		}
+
+		if (layoutManager.canScrollVertically()) {
+			if (velocityY > 0) {
+				differNum = 1;
+				if (isRtlHorizontal) {
+					differNum = -1;
+				}
+			} else {
+				differNum = -1;
+				if (isRtlHorizontal) {
+					differNum = 1;
+				}
+			}
+			targetPage = currentPage + differNum;
+		}
+
+		// 如果当前页只有一个item那么每次滑动就是1，
+		// 如果一页有4个item那么每次滑动就是4
+		final int firstPage = 0;
+		final int lastPage = pageIndex(layoutManager.getItemCount() - 1,row);
+		targetPage = Math.min(lastPage, Math.max(targetPage, firstPage));
+
+		return targetPage * countOfPage(row);
 	}
 
 	private OrientationHelper getVerticalHelper(RecyclerView.LayoutManager layoutManager) {
@@ -421,7 +501,7 @@ public class GravityDelegate {
 		return horizontalHelper;
 	}
 
-	private int pageIndex(int position,int row) {
+	private int pageIndex(int position, int row) {
 		return position / countOfPage(row);
 	}
 
@@ -429,3 +509,4 @@ public class GravityDelegate {
 		return row * column;
 	}
 }
+

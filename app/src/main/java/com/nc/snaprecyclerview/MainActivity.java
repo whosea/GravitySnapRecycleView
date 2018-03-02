@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 		GravitySnapHelper snapHelper = new GravitySnapHelper(Gravity.START);
 		snapHelper.setColumn(column);
 		snapHelper.attachToRecyclerView(rvLeft);
+		snapHelper.setCanPageScroll(true);
 
 	}
 
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
 		GravitySnapHelper snapHelper = new GravitySnapHelper(Gravity.CENTER);
 		snapHelper.setColumn(column);
 		snapHelper.attachToRecyclerView(rvCenter);
+		snapHelper.setCanPageScroll(true);
 
 		CircleRecyclerPageIndicator crpiCenter = (CircleRecyclerPageIndicator) findViewById(R.id.crpiCenter);
 		crpiCenter.setRecyclerView(rvCenter);
@@ -142,20 +144,6 @@ public class MainActivity extends AppCompatActivity {
 		for (int i = 0; i < 22; i++) {
 			ItemBean data = new ItemBean();
 			data.title = "标题" + (i + 1);
-			int value = i % 5;
-//			if (value == 0) {
-//				data.image = "http://h.hiphotos.baidu.com/zhidao/pic/item/060828381f30e9240ff2cd434c086e061d95f76a.jpg";
-//			} else if (value == 1) {
-//				data.image = "http://c.hiphotos.baidu.com/zhidao/pic/item/d788d43f8794a4c22fe6ab9408f41bd5ac6e3943.jpg";
-//			} else if (value == 2) {
-//				data.image = "http://b.hiphotos.baidu.com/zhidao/pic/item/1f178a82b9014a90e7eb9d17ac773912b21bee47.jpg";
-//			} else if (value == 3) {
-//				data.image = "http://e.hiphotos.baidu.com/zhidao/wh%3D450%2C600/sign=75aaa91fa444ad342eea8f83e59220c2/0bd162d9f2d3572cf556972e8f13632763d0c388.jpg";
-//			} else if (value == 4) {
-//				data.image = "http://img1.imgtn.bdimg.com/it/u=1443817543,4124882906&fm=214&gp=0.jpg";
-//			} else {
-//				data.image = "http://imga.mumayi.com/android/img_google/2013/09/26/com.hd.live.wallpaper.beauty.anime/comhdlivewallpaperbeautyanime_litpic_2.jpg";
-//			}
 			dataList.add(data);
 		}
 		return dataList;

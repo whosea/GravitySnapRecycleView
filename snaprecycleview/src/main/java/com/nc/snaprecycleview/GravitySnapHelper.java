@@ -11,10 +11,14 @@ import android.view.View;
  * @date Created on 2017/10/12
  * @description
  */
-
 public class GravitySnapHelper extends LinearSnapHelper {
 
-	@NonNull private final GravityDelegate delegate;
+	@NonNull
+	private final GravityDelegate delegate;
+	/**
+	 * 是否允许翻页的滑动
+	 */
+	private boolean canPageScroll = false;
 
 	public GravitySnapHelper(int gravity) {
 		this(gravity, false, null);
@@ -27,6 +31,11 @@ public class GravitySnapHelper extends LinearSnapHelper {
 	public GravitySnapHelper(int gravity, boolean enableSnapLastItem,
 							 @Nullable SnapListener snapListener) {
 		delegate = new GravityDelegate(gravity, enableSnapLastItem, snapListener);
+
+	}
+
+	public void setCanPageScroll(boolean canPageScroll) {
+		this.canPageScroll = canPageScroll;
 	}
 
 	public void setColumn(int column) {
@@ -49,6 +58,16 @@ public class GravitySnapHelper extends LinearSnapHelper {
 	@Override
 	public View findSnapView(RecyclerView.LayoutManager layoutManager) {
 		return delegate.findSnapView(layoutManager);
+	}
+
+	@Override
+	public int findTargetSnapPosition(RecyclerView.LayoutManager layoutManager, int velocityX,
+									  int velocityY) {
+		if(!canPageScroll){
+			return super.findTargetSnapPosition(layoutManager,velocityX,velocityY);
+		}else{
+			return delegate.findTargetSnapPositionByPage(layoutManager,velocityX,velocityY);
+		}
 	}
 
 	/**

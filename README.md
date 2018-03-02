@@ -24,6 +24,7 @@ demo效果：
 GravitySnapHelper snapHelper = new GravitySnapHelper(Gravity.CENTER);
 snapHelper.setColumn(3);//如果一页里面有超过1列的都需要设置
 snapHelper.attachToRecyclerView(recyclerview);
+snapHelper.setCanPageScroll(true);//是否启用一页一页的滚动，默认不启用
 ```
 翻页监听
 ```
