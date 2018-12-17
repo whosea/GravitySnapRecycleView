@@ -9,8 +9,6 @@ compile 'com.github.whosea:GravitySnapRecycleView:1.0.0'
 # 效果
 项目应用效果：
 
-![](https://raw.githubusercontent.com/whosea/GravitySnapRecycleView/master/doc/freegift.gif)
-
 ![](https://raw.githubusercontent.com/whosea/GravitySnapRecycleView/master/doc/product.gif)
 
 demo效果：
