@@ -1,4 +1,4 @@
-package com.nc.snaprecycleview;
+package com.sea.snaprecycleview;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

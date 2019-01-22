@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nc.snaprecyclerview.view.indicator;
+package com.sea.snaprecyclerview.view.indicator;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -27,7 +27,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 
-import com.nc.snaprecyclerview.R;
+import com.sea.snaprecyclerview.R;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 import static android.widget.LinearLayout.HORIZONTAL;

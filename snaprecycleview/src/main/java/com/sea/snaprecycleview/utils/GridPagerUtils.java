@@ -1,6 +1,6 @@
-package com.nc.snaprecycleview.utils;
+package com.sea.snaprecycleview.utils;
 
-import com.nc.snaprecycleview.transform.InvertRowColumnDataTransform;
+import com.sea.snaprecycleview.transform.InvertRowColumnDataTransform;
 
 import java.util.ArrayList;
 import java.util.List;

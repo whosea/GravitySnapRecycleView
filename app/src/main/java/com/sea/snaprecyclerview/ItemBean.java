@@ -1,4 +1,4 @@
-package com.nc.snaprecyclerview;
+package com.sea.snaprecyclerview;
 
 /**
  * @author ht

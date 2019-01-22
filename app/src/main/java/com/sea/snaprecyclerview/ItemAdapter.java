@@ -1,4 +1,4 @@
-package com.nc.snaprecyclerview;
+package com.sea.snaprecyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

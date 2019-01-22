@@ -1,4 +1,4 @@
-package com.nc.snaprecyclerview.view.indicator;
+package com.sea.snaprecyclerview.view.indicator;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

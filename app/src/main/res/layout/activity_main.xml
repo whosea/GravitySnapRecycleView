@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.nc.snaprecyclerview.view.indicator.CircleRecyclerPageIndicator
+        <com.sea.snaprecyclerview.view.indicator.CircleRecyclerPageIndicator
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/crpiCenter"
             android:layout_width="match_parent"

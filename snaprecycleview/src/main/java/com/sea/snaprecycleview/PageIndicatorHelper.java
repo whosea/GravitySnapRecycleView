@@ -1,4 +1,4 @@
-package com.nc.snaprecycleview;
+package com.sea.snaprecycleview;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;

@@ -1,4 +1,4 @@
-package com.nc.snaprecyclerview;
+package com.sea.snaprecyclerview;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,12 +11,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;
 
-import com.nc.snaprecyclerview.view.indicator.CircleRecyclerPageIndicator;
-import com.nc.snaprecycleview.GravityPageChangeListener;
-import com.nc.snaprecycleview.GravitySnapHelper;
-import com.nc.snaprecycleview.PageIndicatorHelper;
-import com.nc.snaprecycleview.transform.InvertRowColumnDataTransform;
-import com.nc.snaprecycleview.utils.GridPagerUtils;
+import com.sea.snaprecyclerview.view.indicator.CircleRecyclerPageIndicator;
+import com.sea.snaprecycleview.GravityPageChangeListener;
+import com.sea.snaprecycleview.GravitySnapHelper;
+import com.sea.snaprecycleview.PageIndicatorHelper;
+import com.sea.snaprecycleview.transform.InvertRowColumnDataTransform;
+import com.sea.snaprecycleview.utils.GridPagerUtils;
 
 import java.util.ArrayList;
 import java.util.List;
